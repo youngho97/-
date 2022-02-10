@@ -40,7 +40,10 @@ layer 수가 적은 경우 각 layer를 통과할 때마다 입력과 출력의 
 따라서 이러한 깊은 신경망에서의 입력값과 출력값이 차이가 없어지므로 잔여학습의 방법을 사용하면 차이가 없는 정보들을 잘 학습할 수 있어 degradation 문제를 해결할 수 있고, 쉽게 학습이 될 것이다. 
 
 
-주의할 내용은 각 layer마다 이런 identity mapping을 적용해주는 것이 아니라, 두 단의 convolution layer마다 적용한다는 것이다. 쉽게 예를들어 설명하면 하나의 layer에 x를 더해주게 된다면 이는 하나의 linear layer가 사용된 것과 동일하기 때문에 아무런 이득이 없다.
+주의할 내용은 각 layer마다 이런 identity mapping을 적용해주는 것이 아니라, 두 단의 convolution layer마다 적용한다는 것이다. 논문의 설명은 다음과 같다. 하나의 layer에 x를 더해주게 된다면 이는 하나의 linear layer가 사용된 것과 동일하기 때문에 아무런 이득이 없다.
+
+하지만 잘 생각해보면 linear layer가 아니라 conv filter가 적용되는 구간이므로 뭔가 이상함을 알 수 있다.
+필자의 생각은 다음과 같다. 1의 padding을 주고 3*3의 convolution filter를 적용하면 같은 크기의 결과물이 나온다. 이 때 filter의 각 칸은 모든 input의 모든 칸에 한번씩 적용되게 된다. 즉 매 layer 마다 identity mapping을 적용한다는 것은 convolution filter weight에 임의의 한칸에 1의값을 더해준 것이랑 똑같다는 것으로 논문의 내용을 이해하였다.
 
 본 논문에서는 residual newtork의 장점을 다음과 같이 말하고 있다
 * 깊은 layer를 사용하더라도 학습 난이도가 쉽다.
